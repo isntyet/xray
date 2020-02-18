@@ -32,6 +32,14 @@ jobs:
 #        uses: montudor/action-zip@v0.1.0
 #        with:
 #          args: zip -qq -r ./dir.zip ./dir
+      - name: Make zip file
+        uses: montudor/action-zip@v0.1.0
+        with:
+          args: zip -qq -r ./vendor-zip/vendor.zip ./vendor
+      - uses: actions/upload-artifact@master
+        with:
+          name: vendor
+          path: vendor-zip
 
       - name: S3 Upload
         env:
