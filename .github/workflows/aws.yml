@@ -35,7 +35,7 @@ jobs:
       - name: Make zip file
         uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -qq -r ./vendor-zip/vendor.zip ./vendor
+          args: zip -qq -r ./vendor-zip/vendor.zip . -i ./vendor
       - uses: actions/upload-artifact@master
         with:
           name: vendor
