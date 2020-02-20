@@ -48,6 +48,7 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: app
+          path: ./test.zip
 
       - name: Upload to S3 
         env:
