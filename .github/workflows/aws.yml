@@ -33,6 +33,12 @@ jobs:
         with:
           args: zip -qq -r ./$GITHUB_WORKFLOW.zip .
 
+      - name: ENV TEST
+        env:
+          GITHUB_WORKFLOW: ${{ GITHUB_WORKFLOW }}
+        run: echo $GITHUB_WORKFLOW
+        shell: bash
+        
 #       - name: Upload artifact
 #         uses: actions/upload-artifact@v1
 #         with:
