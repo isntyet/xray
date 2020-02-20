@@ -29,7 +29,7 @@ jobs:
         shell: bash
         
       - name: Make zip file
-        run: zip -qq -r ./test_$GITHUB_ACTION.zip .
+        run: zip -qq -r ./test_$GITHUB_SHA.zip .
         shell: bash
 
 #       - name: Make zip file
@@ -60,7 +60,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: aws s3 cp --region ap-northeast-2 ./test_$GITHUB_ACTION.zip s3://isntyet-deploy/test_$GITHUB_ACTION.zip
+        run: aws s3 cp --region ap-northeast-2 ./test_$GITHUB_SHA.zip s3://isntyet-deploy/test_$GITHUB_SHA.zip
     
 
 
