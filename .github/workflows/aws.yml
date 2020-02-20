@@ -7,8 +7,8 @@ on:
 name: Deploy String boot to Amazon EC2
 
 jobs:
-  deploy:
-    name: Deploy
+  build_jar:
+    name: BUILD JAR
     runs-on: ubuntu-18.04
 
     steps:
@@ -33,17 +33,27 @@ jobs:
         with:
           args: zip -qq -r ./test.zip .
 
-      - name: artifact upload
+      - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
           name: app
           path: test.zip
+    
+  s3_upload:
+    name: S3 UPLOAD
+    runs-on: ubuntu-18.04
+    
+    steps:
+      - name: Download artifact 
+        uses: actions/download-artifact@v1
+        with:
+          name: app
 
-#       - name: S3 Upload
-#         env:
-#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#         run: aws s3 cp --region ap-northeast-2 ./test.zip s3://isntyet-deploy
+      - name: Upload to S3 
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: aws s3 cp --region ap-northeast-2 . s3://isntyet-deploy/jojo
 
         
 #run: aws s3 cp --recursive --region ap-northeast-2 ./test.zip s3://isntyet-deploy/test.zip
