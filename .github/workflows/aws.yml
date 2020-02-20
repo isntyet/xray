@@ -7,8 +7,8 @@ on:
 name: Deploy String boot to Amazon EC2
 
 jobs:
-  build_jar:
-    name: BUILD JAR
+  deploy:
+    name: DEPLOY
     runs-on: ubuntu-18.04
 
     steps:
@@ -31,7 +31,7 @@ jobs:
       - name: Make zip file
         uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -qq -r ./test.zip .
+          args: zip -qq -r ./$GITHUB_WORKFLOW.zip .
 
 #       - name: Upload artifact
 #         uses: actions/upload-artifact@v1
@@ -43,7 +43,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: aws s3 cp --region ap-northeast-2 ./test.zip s3://isntyet-deploy/jojo
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_WORKFLOW.zip s3://isntyet-deploy/$GITHUB_WORKFLOW.zip
     
 
 
