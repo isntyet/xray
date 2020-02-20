@@ -33,11 +33,17 @@ jobs:
         with:
           args: zip -qq -r ./test.zip .
 
-      - name: S3 Upload
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: aws s3 cp --region ap-northeast-2 ./test.zip s3://isntyet-deploy
+      - name: artifact upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: app
+          path: test.zip
+
+#       - name: S3 Upload
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         run: aws s3 cp --region ap-northeast-2 ./test.zip s3://isntyet-deploy
 
         
 #run: aws s3 cp --recursive --region ap-northeast-2 ./test.zip s3://isntyet-deploy/test.zip
