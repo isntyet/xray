@@ -30,17 +30,15 @@ jobs:
 
       - name: Make zip file
         uses: montudor/action-zip@v0.1.0
-        env:
-          ACTION: ${{ GITHUB_ACTION }}
         with:
-          args: zip -qq -r ./test_$ACTION.zip .
+          args: zip -qq -r ./test_$GITHUB_ACTION.zip .
 
       - name: Zip Release
         uses: TheDoctor0/zip-release@v0.2.1
         env:
           ACTION: $GITHUB_ACTION
         with:
-          filename: test2.zip
+          filename: test2_$ACTION.zip
 
       - name: TEST
 #         env:
