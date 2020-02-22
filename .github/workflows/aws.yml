@@ -5,6 +5,8 @@ on:
       - master
 
 name: Deploy String boot to Amazon EC2
+env:
+  PROJECT_NAME: xray
 
 jobs:
   deploy:
@@ -29,38 +31,20 @@ jobs:
         shell: bash
         
       - name: Make zip file
-        run: zip -qq -r ./test_$GITHUB_SHA.zip .
+        run: zip -qq -r ./$GITHUB_SHA.zip .
         shell: bash
-
-#       - name: Make zip file
-#         uses: montudor/action-zip@v0.1.0
-#         with:
-#           args: zip -qq -r ./test_$GITHUB_ACTION.zip .
-
-#       - name: Zip Release
-#         uses: TheDoctor0/zip-release@v0.2.1
-#         env:
-#           ACTION: $GITHUB_ACTION
-#         with:
-#           filename: test2_$ACTION.zip
 
       - name: TEST
 #         env:
 #           GITHUB_WORKFLOW: ${{ GITHUB_WORKFLOW }}
         run: ls -al
         shell: bash
-        
-#       - name: Upload artifact
-#         uses: actions/upload-artifact@v1
-#         with:
-#           name: app
-#           path: test.zip
-
+    
       - name: Upload to S3 
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: aws s3 cp --region ap-northeast-2 ./test_$GITHUB_SHA.zip s3://isntyet-deploy/test_$GITHUB_SHA.zip
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://isntyet-deploy/$PROJECT_NAME/$GITHUB_SHA.zip
     
 
 
