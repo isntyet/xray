@@ -45,6 +45,12 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://isntyet-deploy/$PROJECT_NAME/$GITHUB_SHA.zip
+      
+      - name: Code Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: aws deploy create-deployment --application-name xray --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name prd --s3-location bucket=isntyet-deploy,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
     
 
 
