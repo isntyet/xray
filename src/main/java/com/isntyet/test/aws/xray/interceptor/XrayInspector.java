@@ -23,6 +23,4 @@ public class XrayInspector extends AbstractXRayInterceptor {
     public void xrayEnabledClasses() {
     }
 
-
-
 }
