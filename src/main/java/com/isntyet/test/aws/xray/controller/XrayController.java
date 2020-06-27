@@ -15,9 +15,13 @@ public class XrayController {
         this.xrayService = xrayService;
     }
 
-
     @GetMapping("/test")
     public String test(){
+        return "test";
+    }
+
+    @GetMapping("/real")
+    public String real(){
         String testStr = xrayService.testStr();
         System.out.println(testStr);
 
